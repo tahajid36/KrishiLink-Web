@@ -7,12 +7,12 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink to={'/login'}>
-        <button className="btn btn-sm hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
+        <button className="btn btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Login
         </button>
       </NavLink>
       <NavLink to={'/register'}>
-        <button className="btn btn-sm hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
+        <button className="btn btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Register
         </button>
       </NavLink>
@@ -29,10 +29,10 @@ const Navbar = () => {
   </>
   return (
     <div className="">
-      <div className=" bg-gray-600">
+      <div className=" bg-[#6B8E23]">
         <Container>
           <div className="flex justify-end space-x-2 py-2">{links} 
-            <img className="w-8 rounded-full" src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc" alt="" />
+            <img className="w-8 rounded-full" src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc" alt="logo" />
           </div>
         </Container>
       </div>
