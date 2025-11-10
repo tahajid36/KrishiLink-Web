@@ -6,12 +6,12 @@ import logo from '../assets/logo.png'
 const Navbar = () => {
   const links = (
     <>
-      <NavLink>
+      <NavLink to={'/login'}>
         <button className="btn btn-sm hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Login
         </button>
       </NavLink>
-      <NavLink>
+      <NavLink to={'/register'}>
         <button className="btn btn-sm hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Register
         </button>
