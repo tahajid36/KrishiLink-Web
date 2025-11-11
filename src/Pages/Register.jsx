@@ -1,42 +1,75 @@
 import React, { use } from "react";
 import { AuthContext } from "../Layout/AuthProvider";
+import Swal from "sweetalert2";
+import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router";
 
 const Register = () => {
+  const { SignUp, setUser, setLoading, GoogleLogin } = use(AuthContext);
 
-  const { SignUp, setUser, setLoading} = use(AuthContext)
+  const handleGoogleLogin = () => {
+    GoogleLogin()
+      .then((res) => {
+        setLoading(true);
+        console.log(res.user);
+        setUser(res.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User registered successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
-  const handleSignUp = (e)=> {
-    e.preventDefault()
+  const handleSignUp = (e) => {
+    e.preventDefault();
     const email = e.target.email.value;
     const name = e.target.name.value;
     const photo = e.target.photo.value;
     const password = e.target.password.value;
 
-    console.log(email, password, photo, name)
+    console.log(email, password, photo, name);
 
     SignUp(email, password)
-    .then(result => {
-      setLoading(true)
-      console.log(result.user)
-      setUser(result.user)
-    })
-    .catch(error=> {
-      console.log(error.message)
-    })
-
-  }
-
-
-
-
-
-
-
-
+      .then((result) => {
+        setLoading(true);
+        console.log(result.user);
+        setUser(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User registered successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+        const message = error.message
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <form onSubmit={handleSignUp} className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4">
+      <h1 className="text-4xl font-bold text-center mb-22">
+        Create Account to Join our Community
+      </h1>
+      <form
+        onSubmit={handleSignUp}
+        className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4"
+      >
         <legend className="fieldset-legend text-3xl items-center">
           Register Now
         </legend>
@@ -72,8 +105,20 @@ const Register = () => {
           className="input w-full"
           placeholder="Password"
         />
-
-        <button className="btn btn-neutral mt-4">Register</button>
+        <p>
+          Already have an account !{" "}
+          <span className="text-red-600">
+            <Link to="/login">Log In</Link>
+          </span>
+        </p>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn bg-warning hover:bg-white text-black border-[#e5e5e5]"
+        >
+          <FcGoogle />
+          Register with Google
+        </button>
+        <button className="btn btn-neutral mt-1">Register</button>
       </form>
     </div>
   );

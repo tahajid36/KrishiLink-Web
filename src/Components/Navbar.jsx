@@ -1,17 +1,27 @@
 import React, { use } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import Container from "./Container";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../Layout/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, LogOut , setLoading} = use(AuthContext);
+  const navigate = useNavigate()
 
   const handleSignOut = () => {
     LogOut()
       .then(() => {
         setLoading(true)
         console.log("sign out successfully");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You're logged out Successfully",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate('/register')
         //sign out successfully
       })
       .catch((err) => console.log(err.message));
@@ -62,11 +72,15 @@ const Navbar = () => {
                 Log Out
               </button>
             ) : (<div>{links} </div>)}
-            <img
+            {user ? <img
               className="w-8 rounded-full"
-              src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc"
+              src={user.photoURL}
               alt="logo"
-            />
+            /> : <img
+            className="w-8 rounded-full"
+            src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc"
+            alt="logo"
+          />}
           </div>
         </Container>
       </div>
