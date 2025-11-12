@@ -45,7 +45,7 @@ const Navbar = () => {
       <NavLink to={"/"}>
         <a className="text-2xl font-semibold text-gray-600">HOME</a>
       </NavLink>
-      <NavLink>
+      <NavLink to={'/allcrops'}>
         <a className="text-2xl font-semibold text-gray-600">ALL CROPS</a>
       </NavLink>
       <NavLink>
@@ -54,7 +54,7 @@ const Navbar = () => {
       <NavLink>
         <a className="text-2xl font-semibold text-gray-600">INTERESTS</a>
       </NavLink>
-      <NavLink>
+      <NavLink to={'/addcrops'}>
         <a className="text-2xl font-semibold text-gray-600">ADD CROPS</a>
       </NavLink>
     </>

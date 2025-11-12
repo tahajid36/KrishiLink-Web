@@ -3,6 +3,7 @@ import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const { SignUp, setUser, setLoading, GoogleLogin } = use(AuthContext);
@@ -62,7 +63,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
+    <motion.div 
+    initial={{opacity:0, x: -100}}
+    whileInView={{opacity:1, x:0}}
+    viewport={{once: true, amount: 0.5}}
+    transition={{duration: 1, ease: "easeOut"}} 
+    className="min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl font-bold text-center mb-22">
         Create Account to Join our Community
       </h1>
@@ -120,7 +126,7 @@ const Register = () => {
         </button>
         <button className="btn btn-neutral mt-1">Register</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

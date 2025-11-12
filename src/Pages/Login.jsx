@@ -3,6 +3,7 @@ import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate, useNavigate } from "react-router";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const { SignIn, setUser, setLoading, GoogleLogin } = use(AuthContext);
@@ -24,14 +25,9 @@ const Login = () => {
         });
       })
       .catch((error) => {
-        const message = error.message
-        Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+        // const message = error.message
+        console.log(error.message)
+        
       });
   };
 
@@ -84,7 +80,12 @@ const Login = () => {
       });
   };
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
+    <motion.div 
+    initial={{opacity:0, x: -100}}
+    whileInView={{opacity:1, x:0}}
+    viewport={{once: true, amount: 0.5}}
+    transition={{duration: 1, ease: "easeOut"}} 
+    className="min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl font-bold text-center mb-22">
         Login to Your Account,
       </h1>
@@ -127,7 +128,7 @@ const Login = () => {
         </button>
         <button className="btn btn-neutral mt-1">Login</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
