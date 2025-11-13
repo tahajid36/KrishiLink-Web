@@ -154,7 +154,7 @@ const CropDetails = () => {
     
   return (
     <div>
- <div  className="grid grid-cols-2 mt-20 gap-10 md:gap-20">
+ <div  className="grid grid-cols-1 md:grid-cols-2 mt-20 gap-10 md:gap-20">
         {/* left side div  */}
         <div>
         <img src={crop.image} className="rounded-2xl" alt="" />
@@ -177,7 +177,7 @@ const CropDetails = () => {
       </div>
  </div>
 
-    <div className="w-7/11 mx-auto mt-20">
+    <div className="w-9/10 md:w-7/11 mx-auto mt-20">
     <h1 className="text-4xl font-semibold text-center">Send Interest for this Crop</h1>
     <form  onSubmit={handleInterest}>
                 <label className="label">Quantity</label>
