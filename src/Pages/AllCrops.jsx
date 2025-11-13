@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const AllCrops = () => {
   const cropData = useLoaderData();
-  console.log(cropData);
+  // console.log(cropData);
   return (
     <div className="mt-22 space-y-20">
       <h1 className="text-4xl font-bold text-center">

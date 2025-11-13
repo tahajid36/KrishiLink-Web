@@ -8,6 +8,9 @@ import AddCrops from "./Pages/AddCrops";
 import CropDetails from "./Pages/CropDetails";
 import { param } from "framer-motion/client";
 import MyPosts from "./Components/MyPosts";
+import MyProfile from "./Pages/MyProfile";
+import UpdateProfile from "./Pages/UpdateProfile";
+import Interestpage from "./Pages/Interestpage";
 
 export const router = createBrowserRouter([
     {
@@ -44,6 +47,18 @@ export const router = createBrowserRouter([
         {
           path: '/mypost',
           element: <MyPosts></MyPosts>
+        },
+        {
+          path: '/myprofile',
+          element: <MyProfile></MyProfile>
+        },
+        {
+          path: '/updateprofile',
+          element: <UpdateProfile></UpdateProfile>
+        },
+        {
+          path: '/interests',
+          element: <Interestpage></Interestpage>
         }
       ]
     }

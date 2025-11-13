@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Layout/AuthProvider';
 import Swal from 'sweetalert2';
+import { image } from 'framer-motion/client';
 
 const MyPosts = () => {
     const {user} = use(AuthContext)
@@ -21,7 +22,17 @@ const MyPosts = () => {
     }, [user?.email, post])
    
     const handleDelete =(id) =>{
-        fetch(`http://localhost:1000/crops/${id}`, {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:1000/crops/${id}`, {
             method: 'DELETE'
         })
         .then(res=> res.json())
@@ -29,30 +40,26 @@ const MyPosts = () => {
             console.log(data)
             const remainingPost = post.filter(p => p.id !== id)
             setPost(remainingPost)
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Post deleted successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            
         })
         .catch(error => {
             console.log(error.message)
         })
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your Post has been deleted.",
+            icon: "success"
+          });
+        }
+      });
+
+
 
     }
 
     const handleUpdate = (e) => {
       e.preventDefault()
-      const name = e.target.name.value;
-      const type = e.target.type.value;
-      const price = e.target.price.value;
-      const unit = e.target.unit.value;
-      const quantity = e.target.quantity.value;
-      const description = e.target.description.value;
-      const location = e.target.location.value;
-      const image = e.target.image.value;
+      
       const name = e.target.name.value;
       const type = e.target.type.value;
       const price = e.target.price.value;
@@ -71,9 +78,10 @@ const MyPosts = () => {
         location,
         image
     }
+   
 
-      fetch(`http://localhost:1000/crops/${id}`, {
-        method: "PATCH",
+      fetch(`http://localhost:1000/crops/${currentpost._id}`, {
+        method: "PUT",
         headers: {
           'content-type': 'application/json'
         },
@@ -108,7 +116,7 @@ const MyPosts = () => {
             <th>{index + 1}</th>
             <td>{post.name}</td>
             <td> {post.owner.ownerName}</td>
-            <td><button onClick={()=>{setModal(true); setCurrentpost(post)}} className='btn btn-outline btn-success btn-xs'>EDIT</button> 
+            <td><button onClick={()=>{setModal(true); setCurrentpost(post); }} className='btn btn-outline btn-success btn-xs'>EDIT</button> 
              <button onClick={()=>handleDelete(post._id)} className='btn btn-outline btn-error btn-xs ms-2'>Delete</button></td>
           </tr>)
       }
@@ -132,7 +140,7 @@ const MyPosts = () => {
 
         <label className="label">Name</label>
         <input
-        defaultValue={currentpost?.name}
+        defaultValue={currentpost.name}
           name="name"
           type="text"
           className="input w-full"
@@ -207,7 +215,7 @@ const MyPosts = () => {
           required
         />
 
-        <button className="btn btn-neutral mt-4">Submit Post</button>
+        <button type='submit' className="btn btn-neutral mt-4">Submit Post</button>
         <button onClick={()=> setModal(false)} className="btn">Close</button>
       </form>
 

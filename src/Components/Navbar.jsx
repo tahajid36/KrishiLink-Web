@@ -1,27 +1,28 @@
 import React, { use } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Container from "./Container";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
+import { div } from "framer-motion/client";
 
 const Navbar = () => {
-  const { user, LogOut , setLoading} = use(AuthContext);
-  const navigate = useNavigate()
+  const { user, LogOut, setLoading } = use(AuthContext);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     LogOut()
       .then(() => {
-        setLoading(true)
+        setLoading(true);
         console.log("sign out successfully");
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "You're logged out Successfully",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
-        navigate('/register')
+        navigate("/register");
         //sign out successfully
       })
       .catch((err) => console.log(err.message));
@@ -45,16 +46,16 @@ const Navbar = () => {
       <NavLink to={"/"}>
         <a className="text-2xl font-semibold text-gray-600">HOME</a>
       </NavLink>
-      <NavLink to={'/allcrops'}>
+      <NavLink to={"/allcrops"}>
         <a className="text-2xl font-semibold text-gray-600">ALL CROPS</a>
       </NavLink>
-      <NavLink to={'/mypost'}>
+      <NavLink to={"/mypost"}>
         <a className="text-2xl font-semibold text-gray-600">MY POSTS</a>
       </NavLink>
-      <NavLink>
+      <NavLink to={'/interests'}>
         <a className="text-2xl font-semibold text-gray-600">INTERESTS</a>
       </NavLink>
-      <NavLink to={'/addcrops'}>
+      <NavLink to={"/addcrops"}>
         <a className="text-2xl font-semibold text-gray-600">ADD CROPS</a>
       </NavLink>
     </>
@@ -71,16 +72,40 @@ const Navbar = () => {
               >
                 Log Out
               </button>
-            ) : (<div>{links} </div>)}
-            {user ? <img
-              className="w-8 rounded-full"
-              src={user.photoURL}
-              alt="logo"
-            /> : <img
-            className="w-8 rounded-full"
-            src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc"
-            alt="logo"
-          />}
+            ) : (
+              <div>{links} </div>
+            )}
+            {user ? (
+              <div className="dropdown dropdown-center">
+                <img
+                  tabIndex={0}
+                  className="w-8 h-8 rounded-full"
+                  src={user.photoURL}
+                  alt="logo"
+                />
+                <ul
+                  tabIndex="-1"
+                  className="dropdown-content menu bg-green-700 text-white rounded-box z-1 w-32 p-2 shadow-sm"
+                >
+                  <Link to={"/myprofile"}>
+                    <li>
+                      <a>My Profile</a>
+                    </li>{" "}
+                  </Link>
+                  <Link to={'/updateprofile'}>
+                    <li>
+                      <a>Update Profile</a>
+                    </li>{" "}
+                  </Link>
+                </ul>
+              </div>
+            ) : (
+              <img
+                className="w-8 rounded-full"
+                src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc"
+                alt="logo"
+              />
+            )}
           </div>
         </Container>
       </div>
