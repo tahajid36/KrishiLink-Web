@@ -7,6 +7,7 @@ import AllCrops from "./Pages/AllCrops";
 import AddCrops from "./Pages/AddCrops";
 import CropDetails from "./Pages/CropDetails";
 import { param } from "framer-motion/client";
+import MyPosts from "./Components/MyPosts";
 
 export const router = createBrowserRouter([
     {
@@ -38,8 +39,11 @@ export const router = createBrowserRouter([
         {
           path: '/cropdetails/:id',
           element: <CropDetails></CropDetails>,
-          loader: ({params}) => fetch(`http://localhost:1000/crops/${params.id}`)
-          
+          loader: ({params}) => fetch(`http://localhost:1000/crops/${params.id}`) 
+        },
+        {
+          path: '/mypost',
+          element: <MyPosts></MyPosts>
         }
       ]
     }

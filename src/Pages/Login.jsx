@@ -7,29 +7,7 @@ import { motion } from "framer-motion";
 
 const Login = () => {
   const { SignIn, setUser, setLoading, GoogleLogin } = use(AuthContext);
-  const navigate = useNavigate()
-
-  const handleGoogle = () => {
-    GoogleLogin()
-      .then((res) => {
-        setLoading(true);
-        console.log(res.user);
-        setUser(res.user);
-        navigate('/')
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "User Logged in successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        // const message = error.message
-        console.log(error.message)
-        
-      });
-  };
+  const navigate = useNavigate();
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -37,19 +15,17 @@ const Login = () => {
     const password = e.target.password.value;
     console.log(email, password);
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    
-    if(!passwordRegex.test(password)){
-        Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Password must contain 1 upper and lower case characters",
-            showConfirmButton: false,
-            timer: 1500,
-          });
 
-          return
+    if (!passwordRegex.test(password)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Password must contain 1 upper and lower case characters",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
-
+      return;
     }
 
     SignIn(email, password)
@@ -68,32 +44,52 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error.message);
-        const message = error.message
+        const message = error.message;
 
         Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          position: "top-end",
+          icon: "error",
+          title: message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+  const handleGoogle = () => {
+    GoogleLogin()
+      .then((res) => {
+        setLoading(true);
+        console.log(res.user);
+        setUser(res.user);
+        navigate("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User Logged in successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        // const message = error.message
+        console.log(error.message);
       });
   };
   return (
-    <motion.div 
-    initial={{opacity:0, x: -100}}
-    whileInView={{opacity:1, x:0}}
-    viewport={{once: true, amount: 0.5}}
-    transition={{duration: 1, ease: "easeOut"}} 
-    className="min-h-screen flex flex-col justify-center items-center">
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      className="min-h-screen flex flex-col justify-center items-center"
+    >
       <h1 className="text-4xl font-bold text-center mb-22">
         Login to Your Account,
       </h1>
 
-      <form
-        onSubmit={handleSignIn}
-        className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4"
-      >
+      <div className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4">
+      
+      <form onSubmit={handleSignIn}>
         <legend className="fieldset-legend text-3xl items-center">
           Login Here
         </legend>
@@ -117,17 +113,29 @@ const Login = () => {
           {" "}
           <a href="">Forgot Password</a>
         </p>
-        <p>Don't have an account ! <span className="text-red-600"><Link to='/register'>Register</Link></span></p>
+        <p>
+          Don't have an account !{" "}
+          <span className="text-red-600">
+            <Link to="/register">Register</Link>
+          </span>
+        </p>
+        <button className="btn btn-neutral mt-4 w-full">Login</button>
 
-        <button
+        
+      </form>
+      <div className="divider">OR</div>
+
+      <button
           onClick={handleGoogle}
           className="btn bg-warning hover:bg-white text-black border-[#e5e5e5]"
         >
           <FcGoogle />
           Login with Google
         </button>
-        <button className="btn btn-neutral mt-1">Login</button>
-      </form>
+      
+      </div>
+
+      
     </motion.div>
   );
 };

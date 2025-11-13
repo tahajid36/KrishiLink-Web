@@ -72,9 +72,10 @@ const Register = () => {
       <h1 className="text-4xl font-bold text-center mb-22">
         Create Account to Join our Community
       </h1>
+      <div  className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4">
       <form
         onSubmit={handleSignUp}
-        className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4"
+       
       >
         <legend className="fieldset-legend text-3xl items-center">
           Register Now
@@ -117,15 +118,21 @@ const Register = () => {
             <Link to="/login">Log In</Link>
           </span>
         </p>
-        <button
+       
+        <button className="btn btn-neutral mt-4 w-full">Register</button>
+      </form>
+      <div className="divider">OR</div>
+
+      <button
           onClick={handleGoogleLogin}
           className="btn bg-warning hover:bg-white text-black border-[#e5e5e5]"
         >
           <FcGoogle />
           Register with Google
         </button>
-        <button className="btn btn-neutral mt-1">Register</button>
-      </form>
+      </div>
+      
+     
     </motion.div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../Layout/AuthProvider";
+import Swal from "sweetalert2";
 
 const AddCrops = () => {
   const { user } = use(AuthContext);
@@ -51,6 +52,13 @@ const AddCrops = () => {
     .then(res=> res.json())
     .then(data => {
         console.log(data)
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "You're crop posted Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
     })
     .catch(err=> {
         console.log(err.message)
@@ -77,10 +85,11 @@ const AddCrops = () => {
           type="text"
           className="input w-full"
           placeholder="Crop Name"
+          required
         />
 
         <label className="label">Select Your Crop Type</label>
-        <select defaultValue="Vegetable" className="select  w-full" name="type">
+        <select required defaultValue="Vegetable" className="select  w-full" name="type">
           {/* <option disabled={true}>Crop Type</option> */}
           <option>Vegetable</option>
           <option>Fruit</option>
@@ -93,6 +102,7 @@ const AddCrops = () => {
           name="price"
           className="input w-full"
           placeholder="enter price per unit"
+          required
         />
 
         <label className="label">Unit</label>
@@ -101,6 +111,7 @@ const AddCrops = () => {
           name="unit"
           className="input w-full"
           placeholder="enter unit (kg/ton/pound)"
+          required
         />
 
         <label className="label">Estimated Quantity</label>
@@ -109,6 +120,7 @@ const AddCrops = () => {
           name="quantity"
           className="input w-full"
           placeholder="Expected harvesting quantity"
+          required
         />
 
         <label className="label">Description</label>
@@ -116,6 +128,7 @@ const AddCrops = () => {
           name="description"
           className="textarea w-full"
           placeholder="tell us about ur crop"
+          required
         ></textarea>
 
         <label className="label">Location</label>
@@ -124,6 +137,7 @@ const AddCrops = () => {
           name="location"
           className="input w-full"
           placeholder="where the crop grown"
+          required
         />
 
         <label className="label">Image URL</label>
@@ -132,6 +146,7 @@ const AddCrops = () => {
           name="image"
           className="input w-full"
           placeholder="image url here"
+          required
         />
 
         <button className="btn btn-neutral mt-4">Submit Post</button>

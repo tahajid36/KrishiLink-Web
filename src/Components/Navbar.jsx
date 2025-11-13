@@ -48,7 +48,7 @@ const Navbar = () => {
       <NavLink to={'/allcrops'}>
         <a className="text-2xl font-semibold text-gray-600">ALL CROPS</a>
       </NavLink>
-      <NavLink>
+      <NavLink to={'/mypost'}>
         <a className="text-2xl font-semibold text-gray-600">MY POSTS</a>
       </NavLink>
       <NavLink>
