@@ -1,5 +1,6 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Layout/AuthProvider';
+import Swal from 'sweetalert2';
 
 const MyPosts = () => {
     const {user} = use(AuthContext)
@@ -7,12 +8,6 @@ const MyPosts = () => {
     const [post , setPost] = useState([])
     const [modal, setModal] = useState(false)
     const [currentpost, setCurrentpost] = useState(null)
-
-   
-
-  
-
-
     useEffect(()=>{
         if(!user?.email) return;
         fetch(`http://localhost:1000/mypost?email=${user?.email}`)
@@ -25,8 +20,6 @@ const MyPosts = () => {
 
     }, [user?.email, post])
    
-
-
     const handleDelete =(id) =>{
         fetch(`http://localhost:1000/crops/${id}`, {
             method: 'DELETE'
@@ -36,16 +29,66 @@ const MyPosts = () => {
             console.log(data)
             const remainingPost = post.filter(p => p.id !== id)
             setPost(remainingPost)
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Post deleted successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
         })
         .catch(error => {
             console.log(error.message)
         })
 
     }
+
+    const handleUpdate = (e) => {
+      e.preventDefault()
+      const name = e.target.name.value;
+      const type = e.target.type.value;
+      const price = e.target.price.value;
+      const unit = e.target.unit.value;
+      const quantity = e.target.quantity.value;
+      const description = e.target.description.value;
+      const location = e.target.location.value;
+      const image = e.target.image.value;
+      const name = e.target.name.value;
+      const type = e.target.type.value;
+      const price = e.target.price.value;
+      const unit = e.target.unit.value;
+      const quantity = e.target.quantity.value;
+      const description = e.target.description.value;
+      const location = e.target.location.value;
+      const image = e.target.image.value;
+      const updatedData = {
+        name,
+        type,
+        price,
+        unit,
+        quantity,
+        description,
+        location,
+        image
+    }
+
+      fetch(`http://localhost:1000/crops/${id}`, {
+        method: "PATCH",
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(updatedData)
+      })
+      .then(res=> res.json())
+      .then(data => {
+        console.log(data)
+      })
+
+    }
     // console.log(post)
     return (
         <div>
-            <h1>All Crop Posts</h1>
+            <h1 className='text-4xl font-bold text-center my-5'>All Crop Posts</h1>
             <div>
             <div className="w-9/11 mx-auto overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
   <table className="table">
@@ -80,7 +123,7 @@ const MyPosts = () => {
           
           <div className="modal-action">
           <form
-     
+       onSubmit={handleUpdate}
         className="fieldset mx-auto rounded-box w-full border p-4"
       >
         <legend className="fieldset-legend text-2xl">
