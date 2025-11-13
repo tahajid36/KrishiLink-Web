@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "./Slider";
 import HowWorks from "../Components/HowWorks";
 import NewsSection from "../Components/NewsSection";
 import TotalUsers from "../Components/TotalUsers";
 import Brands from "../Components/Brands";
 import { motion } from "framer-motion";
-import { Link, useLoaderData } from "react-router";
+import { data, Link, useLoaderData } from "react-router";
 import CropCard from "../Components/CropCard";
 
 const Home = () => {
-  const cropData = useLoaderData()
-  const filteredcrops = cropData.slice(0,6)
-  // console.log(filteredcrops)
+  const [cropdata, setCropData] = useState([])
+  useEffect(()=>{
+    fetch('https://krishilink-server-six.vercel.app/latestcrop')
+    .then(res=>res.json())
+    .then(data => {
+      setCropData(data)
+    })
+  },[])
+   
+
+
+
+
+  
   return (
     <div className="mt-9">
       <Slider></Slider>
@@ -19,10 +30,10 @@ const Home = () => {
 
       <div
 
-      className="grid grid-cols-3 gap-7 mt-22">
+      className="grid grid-cols-1 md:grid-cols-3 gap-7 mt-22">
 
         {
-          filteredcrops.map(crop =>  <CropCard crop={crop}></CropCard>)
+          cropdata?.map(crop =>  <CropCard crop={crop}></CropCard>)
         }
 
       </div>
@@ -36,7 +47,7 @@ const Home = () => {
         whileInView={{opacity:1, x:0}}
         viewport={{once: true, amount: 0.5}}
         transition={{duration: 1, ease: "easeOut"}}
-       className="w-6/11 mx-auto">
+       className="w-9/10 md:w-6/11 mx-auto">
         <HowWorks></HowWorks>
       </motion.div>
 
@@ -46,7 +57,7 @@ const Home = () => {
       whileInView={{opacity:1, x:0}}
       viewport={{once: true, amount: 0.5}}
       transition={{duration: 1, ease: "easeOut"}} 
-      className="w-6/11 mx-auto">
+      className="w-9/10 md:w-6/11 mx-auto">
         <NewsSection></NewsSection>
       </motion.div>
       <div className="my-10">
@@ -58,7 +69,7 @@ const Home = () => {
       whileInView={{opacity:1, x:0}}
       viewport={{once: true, amount: 0.5}}
       transition={{duration: 1, ease: "easeOut"}} 
-      className="w-6/11 mx-auto">
+      className="w-9/10 md:w-6/11 mx-auto">
          <TotalUsers></TotalUsers>
       </motion.div>
       </div>

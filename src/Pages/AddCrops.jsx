@@ -1,9 +1,11 @@
 import React, { use } from "react";
 import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const AddCrops = () => {
   const { user } = use(AuthContext);
+  const navigate = useNavigate()
   console.log(user);
   const handleaddCrops = (e) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ const AddCrops = () => {
         ownerName: user.displayName,
       },
     };
-    fetch('http://localhost:1000/crops', {
+    fetch('https://krishilink-server-six.vercel.app/crops', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -59,21 +61,22 @@ const AddCrops = () => {
             showConfirmButton: false,
             timer: 1500
           });
+          navigate('/mypost')
     })
     .catch(err=> {
         console.log(err.message)
     })
   };
   return (
-    <div className="mt-30 flex justify-center">
-        <div className="w-4/10">
+    <div className="mt-30 flex flex-col items-center md:flex-row justify-center">
+        <div className="w-9/10 md:w-4/10 mx-auto">
         <img className="rounded-2xl"  src="https://cdn.pixabay.com/photo/2020/02/17/15/05/market-4856748_1280.jpg" alt="" />
 
         </div>
-      <div className="w-5/10">
+      <div className="w-9/10 mt-20  md:w-5/10 mx-auto">
       <form
         onSubmit={handleaddCrops}
-        className="fieldset mx-auto rounded-box w-7/11 border p-4"
+        className="fieldset mx-auto rounded-box w-full md:w-7/11 border p-4"
       >
         <legend className="fieldset-legend text-2xl">
           Add Crop Details Here

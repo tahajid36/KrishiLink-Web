@@ -1,12 +1,15 @@
 import { interpolate } from "framer-motion";
-import React, { use, useRef } from "react";
+import React, { use, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Layout/AuthProvider";
+import Loading from "../Components/Loading";
 
 const CropDetails = () => {
-  const {user} = use(AuthContext)
-  const crop = useLoaderData();
+  const {user } = use(AuthContext)
+  const [loading, setLoading] = useState(false)
+  const cropData = useLoaderData();
+  const [ crop, setCrop] = useState(cropData)
   console.log(crop)
   const { image, location, name, pricePerUnit, description, owner, quantity, unit, type, _id,  } =
     crop;
@@ -30,6 +33,7 @@ const CropDetails = () => {
     }
 
     const handleInterest = (e) => {
+      
       e.preventDefault()
       if(quantity < 1){
         return
@@ -42,19 +46,23 @@ const CropDetails = () => {
           showConfirmButton: false,
           timer: 1500
         });
+
         return 
       }
-      if(owner.ownerEmail === user.email){
+      const alreadySent = crop.interests.some(
+        interest => interest.userEmail === user.email
+      )
+      if(alreadySent) {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "You cannot send interest",
+          title: "You've already sent interest in this crop",
           showConfirmButton: false,
           timer: 1500
         });
-        return
+        return;
       }
-
+      
 
       const InterestInfo ={
         cropId: crop._id,
@@ -68,7 +76,7 @@ const CropDetails = () => {
       }
 
       console.log(InterestInfo.quantity)
-
+      setLoading(true)
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -80,7 +88,8 @@ const CropDetails = () => {
       }).then((result) => {
         if (result.isConfirmed) {
 
-          fetch(`http://localhost:1000/crops/interest/${_id}`, {
+
+          fetch(`https://krishilink-server-six.vercel.app/crops/interest/${_id}`, {
             method: "POST",
             headers: {
               "content-type": "application/json"
@@ -90,6 +99,11 @@ const CropDetails = () => {
           .then(res=> res.json())
           .then(data => {
             console.log(data)
+            setCrop(prev => ({
+              ...prev,
+              interests: [...prev.interests, InterestInfo] 
+            }));
+            setLoading(false)
           })
 
           Swal.fire({
@@ -104,7 +118,8 @@ const CropDetails = () => {
     }
 
     const handleUpdate =async (interestId, newStatus) => {
-      const res = await fetch(`http://localhost:1000/crops/${_id}/interest/${interestId}`,{
+    
+      const res = await fetch(`https://krishilink-server-six.vercel.app/crops/${_id}/interest/${interestId}`,{
         method: 'PUT',
         headers: {
           'content-type': 'application/json'
@@ -121,12 +136,20 @@ const CropDetails = () => {
           showConfirmButton: false,
           timer: 1500
         });
-      }
 
-      const updatedInterests = crop.interests.map(i=> 
-        i._id === interestId ? {...i, status: newStatus}: i
-      )
-      crop.interests = updatedInterests
+        setCrop(c=>({
+          ...c, interests: c.interests.map( i =>
+             i._id === interestId ? {...i, status: newStatus} : i )
+        }))
+      }
+      // const updatedInterests = crop.interests.map(i=> 
+      //   i._id === interestId ? {...i, status: newStatus}: i
+      // )
+      // crop.interests = updatedInterests
+
+    }
+    if(loading){
+      return <Loading></Loading>
     }
     
   return (
@@ -195,9 +218,13 @@ const CropDetails = () => {
           <td>{interest.message}</td>
           <td>{interest.status}</td>
           <td> <button 
-          onClick={()=> handleUpdate(interest._id, "accepted")} className="btn-success btn-outline btn-xs btn mr-2">Accept</button>   
+          onClick={()=> handleUpdate(interest._id, "accepted")}
+          disabled={interest.status !== "Pending"}
+          className="btn-success btn-outline btn-xs btn mr-2">Accept</button>   
            <button
-           onClick={()=> handleUpdate(interest._id, "rejected")} className="btn-error btn-outline btn-xs btn">Reject</button></td>
+           onClick={()=> handleUpdate(interest._id, "rejected")}
+           disabled={interest.status !== "Pending"}
+            className="btn-error btn-outline btn-xs btn">Reject</button></td>
         </tr>)}
         
       </tbody>

@@ -9,6 +9,7 @@ const Login = () => {
   const { SignIn, setUser, setLoading, GoogleLogin } = use(AuthContext);
   const navigate = useNavigate();
 
+
   const handleSignIn = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -40,7 +41,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        <Navigate to="/"></Navigate>;
+        navigate('/');
       })
       .catch((error) => {
         console.log(error.message);
@@ -81,13 +82,13 @@ const Login = () => {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="min-h-screen flex flex-col justify-center items-center"
+      className="min-h-screen flex flex-col  justify-center items-center"
     >
       <h1 className="text-4xl font-bold text-center mb-22">
         Login to Your Account,
       </h1>
 
-      <div className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4">
+      <div className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-9/10 md:w-4/11 border p-4">
       
       <form onSubmit={handleSignIn}>
         <legend className="fieldset-legend text-3xl items-center">

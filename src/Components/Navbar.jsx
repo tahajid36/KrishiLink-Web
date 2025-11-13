@@ -1,20 +1,19 @@
-import React, { use } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import Container from "./Container";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
-import { div } from "framer-motion/client";
 
 const Navbar = () => {
-  const { user, LogOut, setLoading } = use(AuthContext);
+  const { user, LogOut, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignOut = () => {
     LogOut()
       .then(() => {
         setLoading(true);
-        console.log("sign out successfully");
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -23,107 +22,104 @@ const Navbar = () => {
           timer: 1500,
         });
         navigate("/register");
-        //sign out successfully
       })
       .catch((err) => console.log(err.message));
   };
-  const links = (
-    <>
-      <NavLink to={"/login"}>
+
+  const authLinks = user ? (
+    <div className="flex items-center space-x-2">
+      <button
+        onClick={handleSignOut}
+        className="btn btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning"
+      >
+        Log Out
+      </button>
+      <div className="dropdown dropdown-end">
+        <img
+          tabIndex={0}
+          className="w-8 h-8 rounded-full cursor-pointer"
+          src={user.photoURL || "https://i.pravatar.cc/150"}
+          alt="User"
+        />
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-green-700 rounded-box w-40 text-white mt-2"
+        >
+          <li>
+            <Link to="/myprofile">My Profile</Link>
+          </li>
+          <li>
+            <Link to="/updateprofile">Update Profile</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  ) : (
+    <div className="flex space-x-2">
+      <NavLink to="/login">
         <button className="btn mr-2 btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Login
         </button>
       </NavLink>
-      <NavLink to={"/register"}>
+      <NavLink to="/register">
         <button className="btn btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning">
           Register
         </button>
       </NavLink>
-    </>
-  );
-  const routelinks = (
-    <>
-      <NavLink to={"/"}>
-        <a className="text-2xl font-semibold text-gray-600">HOME</a>
-      </NavLink>
-      <NavLink to={"/allcrops"}>
-        <a className="text-2xl font-semibold text-gray-600">ALL CROPS</a>
-      </NavLink>
-      <NavLink to={"/mypost"}>
-        <a className="text-2xl font-semibold text-gray-600">MY POSTS</a>
-      </NavLink>
-      <NavLink to={'/interests'}>
-        <a className="text-2xl font-semibold text-gray-600">INTERESTS</a>
-      </NavLink>
-      <NavLink to={"/addcrops"}>
-        <a className="text-2xl font-semibold text-gray-600">ADD CROPS</a>
-      </NavLink>
-    </>
-  );
-  return (
-    <div className="">
-      <div className=" bg-[#6B8E23]">
-        <Container>
-          <div className="flex justify-end space-x-2 py-2">
-            {user ? (
-              <button
-                onClick={handleSignOut}
-                className="btn btn-sm rounded-full hover:bg-green-700 hover:text-white border-none btn-active btn-warning"
-              >
-                Log Out
-              </button>
-            ) : (
-              <div>{links} </div>
-            )}
-            {user ? (
-              <div className="dropdown dropdown-center">
-                <img
-                  tabIndex={0}
-                  className="w-8 h-8 rounded-full"
-                  src={user.photoURL}
-                  alt="logo"
-                />
-                <ul
-                  tabIndex="-1"
-                  className="dropdown-content menu bg-green-700 text-white rounded-box z-1 w-32 p-2 shadow-sm"
-                >
-                  <Link to={"/myprofile"}>
-                    <li>
-                      <a>My Profile</a>
-                    </li>{" "}
-                  </Link>
-                  <Link to={'/updateprofile'}>
-                    <li>
-                      <a>Update Profile</a>
-                    </li>{" "}
-                  </Link>
-                </ul>
-              </div>
-            ) : (
-              <img
-                className="w-8 rounded-full"
-                src="https://imgs.search.brave.com/_nEZY0ggsXymJkCMwgQEbBMRC10cVAbo2UUA60UCgEc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzQ2LzkxLzEy/LzM2MF9GXzE0Njkx/MTIyN19qNVdqZXBi/QkFjM3VpOHdOVVho/c0dZc1BwYXBhdTFO/VC5qcGc"
-                alt="logo"
-              />
-            )}
-          </div>
-        </Container>
-      </div>
-      <div className="bg-white shadow-sm">
-        <Container>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <img className="w-25" src={logo} alt="" />
-              <h1 className="text-4xl font-bold text-yellow-800 nav-font">
-                KRISHILINK BD
-              </h1>
-            </div>
-            {/* route div here all links  */}
-            <div className="space-x-4 ">{routelinks}</div>
-          </div>
-        </Container>
-      </div>
     </div>
+  );
+
+  const routeLinks = (
+    <>
+      <NavLink to="/" className="text-white font-semibold hover:text-green-700">
+        HOME
+      </NavLink>
+      <NavLink to="/allcrops" className="text-white font-semibold hover:text-green-700">
+        ALL CROPS
+      </NavLink>
+      <NavLink to="/mypost" className="text-white font-semibold hover:text-green-700">
+        MY POSTS
+      </NavLink>
+      <NavLink to="/interests" className="text-white font-semibold hover:text-green-700">
+        INTERESTS
+      </NavLink>
+      <NavLink to="/addcrops" className="text-white font-semibold hover:text-green-700">
+        ADD CROPS
+      </NavLink>
+    </>
+  );
+
+  return (
+    <nav className="bg-[#6B8E23] shadow">
+      <Container>
+        <div className="flex justify-between items-center py-2">
+        
+          <div className="flex items-center space-x-2">
+            <img className="w-20" src={logo} alt="Logo" />
+            <h1 className="text-2xl font-bold text-yellow-800 hidden md:block">KRISHILINK BD</h1>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-6 ">{routeLinks}</div>
+
+          <div className="flex items-center space-x-2">
+            {authLinks}
+
+            <button
+              className="md:hidden ml-2 text-white text-2xl"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              ☰
+            </button>
+          </div>
+        </div>
+
+        {isMenuOpen && (
+          <div className="md:hidden bg-green-700 rounded-b-lg py-2 px-4 space-y-2">
+            {routeLinks}
+          </div>
+        )}
+      </Container>
+    </nav>
   );
 };
 

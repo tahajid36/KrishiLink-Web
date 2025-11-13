@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router";
 
 const CropCard = ({ crop }) => {
-  const { image, location, name, pricePerUnit, type, _id } = crop;
+  const { image, location, name, pricePerUnit, type, _id, created_at } = crop;
   return (
-    <div className="">
+    <div className="mx-2">
       <div className="card element bg-base-100  shadow-sm">
         <figure>
-          <img src={image} alt="Shoes" />
+          <img src={image} className="max-h-[325px] object-cover" alt="Shoes" />
         </figure>
         <div className="card-body">
           <div className="flex justify-between ">
@@ -16,9 +16,10 @@ const CropCard = ({ crop }) => {
               <p>{location}</p>
             </div>
             <div>
-              <p className="font-semibold text-xl text-green-700">
+              <p className="font-semibold text-xl  text-green-700">
                 {pricePerUnit} tk / {crop.unit}
               </p>
+              <p className="text-end">{new Date(created_at).toLocaleDateString()}</p>
             </div>
           </div>
 

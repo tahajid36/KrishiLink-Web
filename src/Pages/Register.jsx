@@ -2,11 +2,12 @@ import React, { use } from "react";
 import { AuthContext } from "../Layout/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 
 const Register = () => {
   const { SignUp, setUser, setLoading, GoogleLogin } = use(AuthContext);
+  const navigate = useNavigate()
 
   const handleGoogleLogin = () => {
     GoogleLogin()
@@ -21,6 +22,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate('/')
       })
       .catch((error) => {
         console.log(error.message);
@@ -48,6 +50,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate('/')
       })
       .catch((error) => {
         console.log(error.message);
@@ -72,7 +75,7 @@ const Register = () => {
       <h1 className="text-4xl font-bold text-center mb-22">
         Create Account to Join our Community
       </h1>
-      <div  className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-4/11 border p-4">
+      <div  className="fieldset bg-base-200 border-base-300 shadow-sm rounded-box w-9/10 md:w-4/11 border p-4">
       <form
         onSubmit={handleSignUp}
        

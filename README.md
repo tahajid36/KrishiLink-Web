@@ -1,16 +1,47 @@
-# React + Vite
+# KrishiLink – Farmer’s Growth & Connection Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+KrishiLink is a modern web application that connects farmers, traders, and consumers in one digital space. It functions as a social agro network where users can interact directly instead of a traditional buyer-seller model.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Users can post what they are growing or selling.
+- Browse and search crop posts.
+- Show interest to connect and collaborate.
+- Private routes for posting crops, managing interests, and updating profiles.
+- Responsive design for desktop and mobile devices.
 
-## React Compiler
+## Pages
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Home:** Hero section, latest crop posts, how it works, agro news/blogs.  
+- **All Crops:** Grid or card layout of all crops with search and view details.  
+- **Crop Details (Private):** Crop info, interest form for non-owners, manage received interests for owners.  
+- **Add Crop (Private):** Form to post new crops with automatic owner association.  
+- **My Posts (Private):** Manage and edit/delete user’s own crops.  
+- **Profile (Private):** View and edit user profile.  
+- **My Interests (Private):** Track crop interests sent by the user.  
 
-## Expanding the ESLint configuration
+## Authentication
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Login and Register with Email/Password or Google.  
+- Password validation: minimum 6 characters, at least one uppercase and lowercase letter.  
+- Proper error handling and success notifications.
+
+## Other Requirements
+
+- Loading indicators while fetching data or navigating.  
+- Error page for invalid routes.  
+- Ensure no page errors on reload.  
+- Maintain consistent design and responsive layout.  
+
+## Tech & Hosting
+
+- Frontend: React, Tailwind CSS.  
+- Backend: Node.js, MongoDB.  
+- Hosting: Client-side (Netlify/Surge/Firebase), Server-side (Vercel).  
+
+## Challenges & Features
+
+- Owners can accept or reject crop interests.  
+- Quantity reduces automatically when interest is accepted.  
+- Sorting options on My Interests page.  
+

@@ -11,16 +11,20 @@ import MyPosts from "./Components/MyPosts";
 import MyProfile from "./Pages/MyProfile";
 import UpdateProfile from "./Pages/UpdateProfile";
 import Interestpage from "./Pages/Interestpage";
+import PrivateRoute from "./Components/PrivateRoute";
+import Error from "./Components/Error";
+import Loading from "./Components/Loading";
 
 export const router = createBrowserRouter([
     {
       path: '/',
       Component: MainLayout,
+      hydrateFallbackElement: <Loading></Loading>,
       children:[
         {
           index: true,
           Component: Home,
-          loader: () => fetch('http://localhost:1000/crops')
+          loader: () => fetch('https://krishilink-server-six.vercel.app/crops')
         },
         {
           path: '/login',
@@ -33,32 +37,54 @@ export const router = createBrowserRouter([
         {
           path: '/allcrops',
           Component: AllCrops,
-          loader: () => fetch('http://localhost:1000/crops')
+          loader: () => fetch('https://krishilink-server-six.vercel.app/crops'),
+          errorElement: <Error></Error>,
+          hydrateFallbackElement: <Loading></Loading>
         },
         {
           path: '/addcrops',
-          element: <AddCrops></AddCrops>
+          element: <PrivateRoute>
+            <AddCrops></AddCrops>
+          </PrivateRoute>
         },
         {
           path: '/cropdetails/:id',
-          element: <CropDetails></CropDetails>,
-          loader: ({params}) => fetch(`http://localhost:1000/crops/${params.id}`) 
+          element: <PrivateRoute>
+            <CropDetails> </CropDetails> 
+          </PrivateRoute>,
+          loader: ({params}) => fetch(`https://krishilink-server-six.vercel.app/crops/${params.id}`),
+          errorElement: <Error></Error>,
+          hydrateFallbackElement: <Loading></Loading> 
         },
         {
           path: '/mypost',
-          element: <MyPosts></MyPosts>
+          element: <PrivateRoute>
+             <MyPosts></MyPosts>
+          </PrivateRoute>
         },
         {
           path: '/myprofile',
-          element: <MyProfile></MyProfile>
+          element: <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
         },
         {
           path: '/updateprofile',
-          element: <UpdateProfile></UpdateProfile>
+          element: <PrivateRoute>
+            <UpdateProfile></UpdateProfile>
+          </PrivateRoute>
         },
         {
           path: '/interests',
-          element: <Interestpage></Interestpage>
+          element: <PrivateRoute>
+            <Interestpage></Interestpage>
+          </PrivateRoute>
+        }
+        ,
+        {
+          path: '*',
+          element: <Error></Error>
+
         }
       ]
     }
