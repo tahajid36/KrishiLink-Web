@@ -2,6 +2,11 @@
 
 KrishiLink is a modern web application that connects farmers, traders, and consumers in one digital space. It functions as a social agro network where users can interact directly instead of a traditional buyer-seller model.
 
+## Project Overview
+**Why I made this project:**  
+KrishiLink is a website where farmers can sell their crop directly to the customers in fair prices. Also the customers are benefited as they can get fresh crop/vegetables straight out of farm. Customers can show interest in crops and farmers can accept or reject. It'll connect farmers,traders,consumers in one place and bring them into a network.
+
+
 ## Features
 
 - Users can post what they are growing or selling.
@@ -26,22 +31,23 @@ KrishiLink is a modern web application that connects farmers, traders, and consu
 - Password validation: minimum 6 characters, at least one uppercase and lowercase letter.  
 - Proper error handling and success notifications.
 
-## Other Requirements
-
-- Loading indicators while fetching data or navigating.  
-- Error page for invalid routes.  
-- Ensure no page errors on reload.  
-- Maintain consistent design and responsive layout.  
-
-## Tech & Hosting
+## Tech Stack
 
 - Frontend: React, Tailwind CSS.  
 - Backend: Node.js, MongoDB.  
-- Hosting: Client-side (Netlify/Surge/Firebase), Server-side (Vercel).  
+- Hosting: Client-side Firebase, Server-side (Vercel).
 
-## Challenges & Features
+## Dependencies
+- tailwind css
+- firebase
+- framer motion
+- react icons
+- react router
+- sweetalert2
+- swiper
 
-- Owners can accept or reject crop interests.  
-- Quantity reduces automatically when interest is accepted.  
-- Sorting options on My Interests page.  
+## Live URL 
+Live Link: https://krishilink-c85d4.web.app/
+
+
 
