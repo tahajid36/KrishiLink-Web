@@ -1,4 +1,5 @@
 # KrishiLink – Farmer’s Growth & Connection Platform
+<img width="1919" height="916" alt="image" src="https://github.com/user-attachments/assets/cc27e748-346b-4eb5-b30e-b44a14f519ce" />
 
 KrishiLink is a modern web application that connects farmers, traders, and consumers in one digital space. It functions as a social agro network where users can interact directly instead of a traditional buyer-seller model.
 
@@ -48,6 +49,16 @@ KrishiLink is a website where farmers can sell their crop directly to the custom
 
 ## Live URL 
 Live Link: https://krishilink-c85d4.web.app/
+
+```bash
+# Clone the repository
+git clone https://github.com/tahajid36/KrishiLink-Web.git
+
+# Navigate to the project folder
+cd KrishiLink-Web
+
+# Open index.html in your browser
+# You can double-click index.html or serve using Live Server in VSCode
 
 
 
